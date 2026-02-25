@@ -213,3 +213,62 @@ footer > p {
     font-size: 0.85rem;
     color: #888;
 }
+
+body.dark-mode {
+    --background-color: #090c10;
+    --white: #161b22; 
+    --text-color: #c9d1d9;
+    --text-muted: #8b949e;
+    --primary-color: #58a6ff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode h3,
+.dark-mode label,
+.dark-mode nav a {
+    color: #f0f6fc;
+}
+
+.dark-mode nav a:hover {
+    color: #fff;
+}
+
+.dark-mode header h1,
+.dark-mode header h2 {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.dark-mode header p {
+    color: var(--primary-color);
+}
+
+.dark-mode footer form {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+}
+
+.dark-mode input,
+.dark-mode textarea {
+    background-color: #090c10;
+    border: 1px solid #30363d;
+    color: #f0f6fc;
+}
+
+.dark-mode input:focus,
+.dark-mode textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+}
+
+.dark-mode blockquote {
+    background-color: #0d1117;
+    border-left-color: var(--primary-color);
+    color: var(--text-muted);
+}
+
+.dark-mode h3, .dark-mode label, .dark-mode nav a,
+.dark-mode header h1, .dark-mode header h2, .dark-mode header p,
+.dark-mode footer form, .dark-mode blockquote {
+    transition: var(--transition);
+}
