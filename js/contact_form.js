@@ -9,14 +9,27 @@ if (oraCurenta >= 6 && oraCurenta < 12) {
     mesajSalut.textContent = "Bună seara! Bine ai venit pe pagina mea.";
 }
 
-function submitForm() {
+const form = document.querySelector('form');
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
     const nume = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const mesaj = document.getElementById("message").value;
+    const feedback = document.getElementById("form-feedback");
 
-    console.log("Nume:", nume);
-    console.log("Email:", email);
-    console.log("Mesaj:", mesaj);
-
-    console.warn("Goodbye World!");
-}
+    if (nume.length < 2) {
+        feedback.textContent = "Numele este prea scurt!";
+        feedback.style.color = "red";
+    } else if (!email.includes('@')) {
+        feedback.textContent = "Email-ul trebuie să conțină @!";
+        feedback.style.color = "red";
+    } else if (mesaj.length < 10) {
+        feedback.textContent = "Mesajul trebuie să aibă cel puțin 10 caractere!";
+        feedback.style.color = "red";
+    } else {
+        feedback.textContent = `Multumim, ${nume}! Mesajul a fost trimis.`;
+        feedback.style.color = "green";
+    }
+});

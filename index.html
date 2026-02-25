@@ -8,14 +8,10 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <script>
-        alert("Hello World!");
-    </script>
-
     <header>
         <h1>Trimbitas Stefan Ioan</h1>
         <h2>Facultatea de inginerie electrica si stiinta calculatoarelor</h2>
-        <p>Doctorand la UNITBV</p>
+        <p>Student la UNITBV</p>
     </header>
 
     <nav>
@@ -52,10 +48,10 @@
     </aside>
 
     <footer>
-        
         <div id="contact">
             <h3>Contactează-mă</h3>
-            <form onsubmit="event.preventDefault();"> <label for="name">Nume:</label><br>
+            <form>
+                <label for="name">Nume:</label><br>
                 <input type="text" id="name" name="name" required><br>
 
                 <label for="email">Email:</label><br>
@@ -64,7 +60,8 @@
                 <label for="message">Mesaj:</label><br>
                 <textarea id="message" name="message" rows="4" required></textarea><br>
 
-                <button type="submit" onclick="submitForm()">Trimite</button>
+                <button type="submit">Trimite</button>
+                <p id="form-feedback"></p>
             </form>
         </div>
 
