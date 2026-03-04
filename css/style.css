@@ -272,3 +272,12 @@ body.dark-mode {
 .dark-mode footer form, .dark-mode blockquote {
     transition: var(--transition);
 }
+
+.hidden {
+    display: none !important;
+}
+
+main h3 {
+    cursor: pointer;
+    user-select: none;
+}

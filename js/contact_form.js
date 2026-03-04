@@ -47,3 +47,26 @@ themeToggle.addEventListener('click', function(event) {
         themeToggle.textContent = '🌙 Dark Mode';
     }
 });
+
+const sectionTitles = document.querySelectorAll('main h3');
+
+sectionTitles.forEach(function(title) {
+    title.innerHTML = '▼ ' + title.innerHTML;
+    
+    title.addEventListener('click', function() {
+        let elementUrmator = this.nextElementSibling;
+        let esteAscuns = false;
+        
+        while (elementUrmator) {
+            elementUrmator.classList.toggle('hidden');
+            esteAscuns = elementUrmator.classList.contains('hidden');
+            elementUrmator = elementUrmator.nextElementSibling;
+        }
+        
+        if (esteAscuns) {
+            this.innerHTML = this.innerHTML.replace('▼', '▶');
+        } else {
+            this.innerHTML = this.innerHTML.replace('▶', '▼');
+        }
+    });
+});
