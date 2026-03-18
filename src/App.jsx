@@ -1,3 +1,5 @@
+import Card from './Card';
+
 function App() {
   return (
     <div>
@@ -10,6 +12,8 @@ function App() {
       <h3>Despre mine</h3>
       <p>Salut! Sunt un student pasionat de tehnologie web și programare.</p>
       <p><strong>Hobby-uri:</strong> tehnologie, muzica, ciclism.</p>
+      
+      <Card />
     </div>
   );
 }
