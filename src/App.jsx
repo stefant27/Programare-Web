@@ -25,7 +25,9 @@ function App() {
       <p><strong>Hobby-uri:</strong> tehnologie, muzica, ciclism.</p>
       
       <p>Ai apasat de {count} ori</p>
-      <button onClick={() => setCount(count + 1)}>Click</button>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(0)}>Reset</button>
 
       {projects.map(function(item, index) {
         return <Card key={index} title={item.title} description={item.description} />;
