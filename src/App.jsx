@@ -13,7 +13,9 @@ function App() {
       <p>Salut! Sunt un student pasionat de tehnologie web și programare.</p>
       <p><strong>Hobby-uri:</strong> tehnologie, muzica, ciclism.</p>
       
-      <Card />
+      <Card title="Proiect 1" description="Pagina personala cu HTML si CSS" />
+      <Card title="Proiect 2" description="Pagina interactiva cu JavaScript" />
+      <Card title="Proiect 3" description="Dashboard cu React" />
     </div>
   );
 }
