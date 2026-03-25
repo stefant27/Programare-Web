@@ -1,10 +1,10 @@
-// src/App.jsx
-import './App.css'; // Asigurați-vă că acest import există
+import './App.css';
 import { useState } from 'react';
 import Card from './Card';
 import QuickNote from './QuickNote';
 import TodoList from './TodoList';
 import ContactForm from './ContactForm';
+import Clock from './Clock';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +35,8 @@ function App() {
         <button onClick={() => setCount(count - 1)}>-1</button>
         <button onClick={() => setCount(0)}>Reset</button>
       </div>
+
+      <Clock />
 
       <h3>Proiecte</h3>
       <div className="card-container">
