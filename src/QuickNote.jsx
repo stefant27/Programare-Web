@@ -1,3 +1,4 @@
+// src/QuickNote.jsx
 import { useState } from 'react';
 
 function QuickNote() {
@@ -9,8 +10,9 @@ function QuickNote() {
       <input
         value={note}
         onChange={(e) => setNote(e.target.value)}
+        placeholder="Scrie o notă rapidă..."
       />
-      <p>Ai scris: {note}</p>
+      <p className="note-preview">Ai scris: {note}</p>
     </div>
   );
 }

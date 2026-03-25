@@ -1,3 +1,4 @@
+// src/TodoList.jsx
 import { useState } from 'react';
 
 function TodoList() {
@@ -5,9 +6,9 @@ function TodoList() {
   const [input, setInput] = useState('');
 
   function handleAdd() {
-    if (input.trim() === '') return;
+    if (input.trim() === '') return; // Previne text gol
     setTodos([...todos, input]);
-    setInput('');
+    setInput(''); // Golește input-ul
   }
 
   function handleDelete(index) {
@@ -19,12 +20,14 @@ function TodoList() {
   return (
     <div>
       <h3>Todo List</h3>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Adauga un task..."
-      />
-      <button onClick={handleAdd}>Adauga</button>
+      <div className="todo-form">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Adauga un task..."
+        />
+        <button onClick={handleAdd}>Adauga</button>
+      </div>
 
       <ul>
         {todos.map(function(todo, index) {
