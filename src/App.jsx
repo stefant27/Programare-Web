@@ -1,21 +1,13 @@
 import './App.css';
 import { useState } from 'react';
-import Card from './Card';
 import QuickNote from './QuickNote';
 import TodoList from './TodoList';
 import ContactForm from './ContactForm';
 import Clock from './Clock';
+import ProjectList from './ProjectList';
 
 function App() {
   const [count, setCount] = useState(0);
-
-  const projects = [
-    { title: "Proiect 1", description: "Pagina personala" },
-    { title: "Proiect 2", description: "Calculator buget" },
-    { title: "Proiect 3", description: "Dashboard React" },
-    { title: "Proiect 4", description: "Aplicatie de To-Do" },
-    { title: "Proiect 5", description: "Magazin online" }
-  ];
 
   return (
     <div>
@@ -37,13 +29,8 @@ function App() {
       </div>
 
       <Clock />
-
-      <h3>Proiecte</h3>
-      <div className="card-container">
-        {projects.map(function(item, index) {
-          return <Card key={index} title={item.title} description={item.description} />;
-        })}
-      </div>
+      
+      <ProjectList />
 
       <QuickNote />
       <TodoList />
