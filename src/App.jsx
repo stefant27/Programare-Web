@@ -5,6 +5,7 @@ import TodoList from './TodoList';
 import ContactForm from './ContactForm';
 import Clock from './Clock';
 import ProjectList from './ProjectList';
+import UsersList from './UsersList';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,6 +32,8 @@ function App() {
       <Clock />
       
       <ProjectList />
+      
+      <UsersList />
 
       <QuickNote />
       <TodoList />
