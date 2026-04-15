@@ -39,6 +39,11 @@ function ProjectList() {
             <Card key={project.id} title={project.title} description={project.tech} />
           ))}
       </div>
+      <div>
+        <p>Total proiecte: {projects.length}</p>
+        <p>Finalizate: {projects.filter(p => p.done).length}</p>
+        <p>In lucru: {projects.filter(p => !p.done).length}</p>
+      </div>
     </div>
   );
 }
