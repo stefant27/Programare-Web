@@ -40,6 +40,17 @@ function ProjectList() {
     }
   }
 
+  async function handleDelete(id) {
+    try {
+      await fetch('http://localhost:3000/api/projects/' + id, {
+        method: 'DELETE'
+      });
+      setProjects(projects.filter(p => p._id !== id));
+    } catch (err) {
+      console.error('Eroare:', err);
+    }
+  }
+
   if (loading) return <p>Se incarca...</p>;
   if (error) return <p>{error}</p>;
 
@@ -73,7 +84,10 @@ function ProjectList() {
         {projects
           .filter(project => project.title.toLowerCase().includes(search.toLowerCase()))
           .map(project => (
-            <Card key={project._id} title={project.title} description={project.tech} />
+            <div key={project._id}>
+              <Card title={project.title} description={project.tech} />
+              <button onClick={() => handleDelete(project._id)}>Sterge</button>
+            </div>
           ))}
       </div>
       <div>
