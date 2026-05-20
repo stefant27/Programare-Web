@@ -5,7 +5,10 @@ function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('date');
 
   const [title, setTitle] = useState('');
   const [tech, setTech] = useState('');
@@ -45,13 +48,15 @@ function ProjectList() {
   }
 
   async function handleDelete(id) {
-    try {
-      await fetch('http://localhost:3000/api/projects/' + id, {
-        method: 'DELETE'
-      });
-      setProjects(projects.filter(p => p._id !== id));
-    } catch (err) {
-      console.error('Eroare:', err);
+    if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
+      try {
+        await fetch('http://localhost:3000/api/projects/' + id, {
+          method: 'DELETE'
+        });
+        setProjects(projects.filter(p => p._id !== id));
+      } catch (err) {
+        console.error('Eroare:', err);
+      }
     }
   }
 
@@ -87,71 +92,103 @@ function ProjectList() {
   if (loading) return <p>Se incarca...</p>;
   if (error) return <p>{error}</p>;
 
+  const filteredAndSortedProjects = projects
+    .filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
+    .filter(p => {
+      if (statusFilter === 'done') return p.done;
+      if (statusFilter === 'working') return !p.done;
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'title') return a.title.localeCompare(b.title);
+      return b._id.localeCompare(a._id);
+    });
+
   return (
-    <div>
+    <div className="project-list">
       <h3>Proiecte</h3>
 
-      <form onSubmit={handleSubmit}>
+      <form className="add-project-form" onSubmit={handleSubmit}>
         <input 
           type="text" 
           placeholder="Titlu proiect" 
           value={title} 
           onChange={(e) => setTitle(e.target.value)} 
+          required
         />
         <input 
           type="text" 
           placeholder="Tehnologii" 
           value={tech} 
           onChange={(e) => setTech(e.target.value)} 
+          required
         />
-        <button type="submit">Adauga</button>
+        <button type="submit" className="btn-add">Adauga Proiect</button>
       </form>
 
-      <input 
-        type="text" 
-        placeholder="Cauta dupa titlu..." 
-        value={search} 
-        onChange={(e) => setSearch(e.target.value)} 
-      />
+      <div style={{ display: 'flex', gap: '10px', marginTop: '1.5rem', marginBottom: '1rem' }}>
+        <input 
+          type="text" 
+          placeholder="Cauta dupa titlu..." 
+          value={search} 
+          onChange={(e) => setSearch(e.target.value)} 
+          style={{ margin: 0, flex: 1 }}
+        />
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+          <option value="all">Toate</option>
+          <option value="done">Finalizate</option>
+          <option value="working">În lucru</option>
+        </select>
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+          <option value="date">Sortare după dată</option>
+          <option value="title">Sortare după titlu</option>
+        </select>
+      </div>
+
       <div className="card-container">
-        {projects
-          .filter(project => project.title.toLowerCase().includes(search.toLowerCase()))
-          .map(project => (
-            <div key={project._id}>
-              {editingId === project._id ? (
-                <div>
-                  <input 
-                    type="text" 
-                    value={editTitle} 
-                    onChange={(e) => setEditTitle(e.target.value)} 
-                  />
-                  <input 
-                    type="text" 
-                    value={editTech} 
-                    onChange={(e) => setEditTech(e.target.value)} 
-                  />
-                  <button onClick={() => handleSaveEdit(project._id)}>Salveaza</button>
-                  <button onClick={() => setEditingId(null)}>Anuleaza</button>
+        {filteredAndSortedProjects.map(project => (
+          <div key={project._id} className={`project-card ${project.done ? 'status-done' : 'status-working'}`}>
+            {editingId === project._id ? (
+              <div className="edit-form">
+                <input 
+                  type="text" 
+                  value={editTitle} 
+                  onChange={(e) => setEditTitle(e.target.value)} 
+                />
+                <input 
+                  type="text" 
+                  value={editTech} 
+                  onChange={(e) => setEditTech(e.target.value)} 
+                />
+                <div className="action-buttons">
+                  <button className="btn-save" onClick={() => handleSaveEdit(project._id)}>Salveaza</button>
+                  <button className="btn-cancel" onClick={() => setEditingId(null)}>Anuleaza</button>
                 </div>
-              ) : (
-                <div>
-                  <Card title={project.title} description={project.tech} />
-                  <p>Status: {project.done ? 'Finalizat' : 'In lucru'}</p>
-                  <button onClick={() => {
+              </div>
+            ) : (
+              <>
+                <Card title={project.title} description={project.tech} />
+                <p className="status-text">
+                  Status: <strong>{project.done ? 'Finalizat' : 'In lucru'}</strong>
+                </p>
+                <div className="action-buttons">
+                  <button className="btn-edit" onClick={() => {
                     setEditingId(project._id);
                     setEditTitle(project.title);
                     setEditTech(project.tech);
                   }}>Editeaza</button>
-                  <button onClick={() => handleToggle(project._id, project.done)}>
-                    Schimba Status
+                  <button className="btn-toggle" onClick={() => handleToggle(project._id, project.done)}>
+                    {project.done ? 'Marcheaza In Lucru' : 'Finalizeaza'}
                   </button>
-                  <button onClick={() => handleDelete(project._id)}>Sterge</button>
+                  <button className="btn-delete" onClick={() => handleDelete(project._id)}>Sterge</button>
                 </div>
-              )}
-            </div>
-          ))}
+              </>
+            )}
+          </div>
+        ))}
       </div>
-      <div>
+
+      <div className="stats-container">
         <p>Total proiecte: {projects.length}</p>
         <p>Finalizate: {projects.filter(p => p.done).length}</p>
         <p>In lucru: {projects.filter(p => !p.done).length}</p>

@@ -1,7 +1,7 @@
 // src/Card.jsx
 function Card(props) {
   return (
-    <div className="project-card">
+    <div className="card-content">
       <h3>{props.title}</h3>
       <p>{props.description}</p>
     </div>
