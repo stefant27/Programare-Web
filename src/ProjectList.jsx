@@ -10,6 +10,10 @@ function ProjectList() {
   const [title, setTitle] = useState('');
   const [tech, setTech] = useState('');
 
+  const [editingId, setEditingId] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editTech, setEditTech] = useState('');
+
   useEffect(() => {
     fetch('http://localhost:3000/api/projects')
       .then(response => response.json())
@@ -51,6 +55,35 @@ function ProjectList() {
     }
   }
 
+  async function handleToggle(id, currentDone) {
+    try {
+      const response = await fetch('http://localhost:3000/api/projects/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ done: !currentDone })
+      });
+      const updatedProject = await response.json();
+      setProjects(projects.map(p => p._id === id ? updatedProject : p));
+    } catch (err) {
+      console.error('Eroare:', err);
+    }
+  }
+
+  async function handleSaveEdit(id) {
+    try {
+      const response = await fetch('http://localhost:3000/api/projects/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: editTitle, tech: editTech })
+      });
+      const updatedProject = await response.json();
+      setProjects(projects.map(p => p._id === id ? updatedProject : p));
+      setEditingId(null);
+    } catch (err) {
+      console.error('Eroare:', err);
+    }
+  }
+
   if (loading) return <p>Se incarca...</p>;
   if (error) return <p>{error}</p>;
 
@@ -85,8 +118,36 @@ function ProjectList() {
           .filter(project => project.title.toLowerCase().includes(search.toLowerCase()))
           .map(project => (
             <div key={project._id}>
-              <Card title={project.title} description={project.tech} />
-              <button onClick={() => handleDelete(project._id)}>Sterge</button>
+              {editingId === project._id ? (
+                <div>
+                  <input 
+                    type="text" 
+                    value={editTitle} 
+                    onChange={(e) => setEditTitle(e.target.value)} 
+                  />
+                  <input 
+                    type="text" 
+                    value={editTech} 
+                    onChange={(e) => setEditTech(e.target.value)} 
+                  />
+                  <button onClick={() => handleSaveEdit(project._id)}>Salveaza</button>
+                  <button onClick={() => setEditingId(null)}>Anuleaza</button>
+                </div>
+              ) : (
+                <div>
+                  <Card title={project.title} description={project.tech} />
+                  <p>Status: {project.done ? 'Finalizat' : 'In lucru'}</p>
+                  <button onClick={() => {
+                    setEditingId(project._id);
+                    setEditTitle(project.title);
+                    setEditTech(project.tech);
+                  }}>Editeaza</button>
+                  <button onClick={() => handleToggle(project._id, project.done)}>
+                    Schimba Status
+                  </button>
+                  <button onClick={() => handleDelete(project._id)}>Sterge</button>
+                </div>
+              )}
             </div>
           ))}
       </div>
