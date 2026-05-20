@@ -63,7 +63,7 @@ app.put('/api/projects/:id', async function(req, res) {
   }
 });
 
-app.delete('/api/projects/:id', async function(req, res) {
+app.delete('/api/projects/:id', async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) return res.status(404).json({ error: 'Not found' });
