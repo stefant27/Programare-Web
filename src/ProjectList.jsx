@@ -8,10 +8,10 @@ function ProjectList() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch('/data/projects.json')
+    fetch('http://localhost:3000/api/projects')
       .then(response => response.json())
       .then(data => {
-        setProjects(data.projects);
+        setProjects(data);
         setLoading(false);
       })
       .catch(() => {
@@ -36,7 +36,7 @@ function ProjectList() {
         {projects
           .filter(project => project.title.toLowerCase().includes(search.toLowerCase()))
           .map(project => (
-            <Card key={project.id} title={project.title} description={project.tech} />
+            <Card key={project._id} title={project.title} description={project.tech} />
           ))}
       </div>
       <div>

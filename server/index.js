@@ -1,5 +1,6 @@
 /* eslint-env node */
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/dashboard')
     console.error('Eroare conectare MongoDB:', err);
   });
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', function(req, res) {
