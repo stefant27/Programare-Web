@@ -1,4 +1,4 @@
-/* eslint-env node */
+/* global require, module */
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
