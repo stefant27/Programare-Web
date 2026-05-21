@@ -4,7 +4,7 @@ function Home() {
   const [stats, setStats] = useState({ total: 0, done: 0, inProgress: 0 });
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/stats')
+    fetch('https://programare-web.onrender.com/api/stats')
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(err => console.error(err));

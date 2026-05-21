@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Card from './Card';
 
+const API = 'https://programare-web.onrender.com';
+
 function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ function ProjectList() {
   const [editTech, setEditTech] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/projects')
+    fetch(API + '/api/projects')
       .then(response => response.json())
       .then(data => {
         setProjects(data);
@@ -33,7 +35,7 @@ function ProjectList() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/projects', {
+      const response = await fetch('https://programare-web.onrender.com/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, tech: tech })
@@ -50,7 +52,7 @@ function ProjectList() {
   async function handleDelete(id) {
     if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
       try {
-        await fetch('http://localhost:3000/api/projects/' + id, {
+        await fetch('https://programare-web.onrender.com/api/projects/' + id, {
           method: 'DELETE'
         });
         setProjects(projects.filter(p => p._id !== id));
@@ -62,7 +64,7 @@ function ProjectList() {
 
   async function handleToggle(id, currentDone) {
     try {
-      const response = await fetch('http://localhost:3000/api/projects/' + id, {
+      const response = await fetch(API + '/api/projects/' + id, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ done: !currentDone })
@@ -76,7 +78,7 @@ function ProjectList() {
 
   async function handleSaveEdit(id) {
     try {
-      const response = await fetch('http://localhost:3000/api/projects/' + id, {
+      const response = await fetch(API + '/api/projects/' + id, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: editTitle, tech: editTech })
