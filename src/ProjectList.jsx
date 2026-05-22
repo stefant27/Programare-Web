@@ -35,7 +35,7 @@ function ProjectList() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch('https://programare-web.onrender.com/api/projects', {
+      const response = await fetch(API + '/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, tech: tech })
@@ -52,7 +52,7 @@ function ProjectList() {
   async function handleDelete(id) {
     if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
       try {
-        await fetch('https://programare-web.onrender.com/api/projects/' + id, {
+        await fetch(API + '/api/projects/' + id, {
           method: 'DELETE'
         });
         setProjects(projects.filter(p => p._id !== id));

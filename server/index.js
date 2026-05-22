@@ -16,7 +16,9 @@ mongoose.connect(process.env.MONGO_URI)
     console.error('Eroare conectare MongoDB:', err);
   });
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://programare-web-q722.vercel.app']
+}));
 app.use(express.json());
 
 app.get('/', function(req, res) {
